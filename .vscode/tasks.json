@@ -1,0 +1,49 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "go",
+			"label": "go: build package",
+			"command": "build",
+			"args": [
+				"-o",
+				"build/"
+			],
+			"problemMatcher": [
+				"$go"
+			],
+			"presentation": {
+				"echo": false,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "dedicated",
+				"showReuseMessage": false,
+				"clear": true
+			}
+		},
+		{
+			"label": "run",
+			"type": "shell",
+			"command": "./build/go-link-shortener",
+			"problemMatcher": [],
+			"group": "build",
+			"runOptions": {
+				"reevaluateOnRerun": true,
+				"instanceLimit": 1,
+				"runOn": "default"
+			},
+			"icon": {"id": "bookmark"},
+			"promptOnClose": true,
+			"isBackground": true,
+			"dependsOn": "go: build package",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": true
+			}
+		}
+	]
+}
