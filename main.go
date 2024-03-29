@@ -4,7 +4,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/fsnotify/fsnotify"
 )
+
+var ConfigPath = "go-link-shortener.json"
+var ShortsPath = "go-shorts.json"
 
 var AllShorts *Shorts
 
@@ -21,12 +26,27 @@ func main() {
 	// log.Printf("%+v", config)
 
 	log.Println("load shorts")
-	AllShorts = NewShorts()
+	AllShorts, _ = NewShorts()
 	log.Println("loaded shorts")
 
 	log.Println("registering route \"/to/*\"")
 	http.HandleFunc("/to/*", redirect)
 
+	log.Println("registering route \"/list\"")
+	http.HandleFunc("/list", list)
+
+	log.Println("creating monitor for config changes")
+	watcher, err := fsnotify.NewWatcher()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer watcher.Close()
+
+	watcher.Add(ShortsPath)
+	go AllShorts.MonitorConfig(watcher)
+
 	log.Printf("listening to new requests on :%v\n", config.Port)
-	http.ListenAndServe(fmt.Sprint(":", config.Port), nil)
+	go http.ListenAndServe(fmt.Sprint(":", config.Port), nil)
+
+	<-make(chan interface{})
 }

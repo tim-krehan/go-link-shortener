@@ -12,15 +12,15 @@ type Config struct {
 }
 
 func NewConfig() *Config {
-	if _, err := os.Stat("go-link-shortener.json"); err != nil {
+	if _, err := os.Stat(ConfigPath); err != nil {
 		log.Println("config not existing, creating default")
 		data, err := json.Marshal(DefaultConfig)
 		if err != nil {
 			panic(err)
 		}
-		os.WriteFile("go-link-shortener.json", data, 0660)
+		os.WriteFile(ConfigPath, data, 0660)
 	}
-	byt, err := os.ReadFile("go-link-shortener.json")
+	byt, err := os.ReadFile(ConfigPath)
 	if err != nil {
 		panic(err)
 	}
