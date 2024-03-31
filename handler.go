@@ -17,10 +17,12 @@ func redirect(w http.ResponseWriter, req *http.Request) {
 		log.Printf("requested target is \"%v\"\n", target)
 		sh := AllShorts.GetShort(target)
 		if sh != nil {
-			fmt.Fprintf(w, "%v\n", sh.targetUrl.String())
+			log.Printf("redirecting to \"%v\"\n", sh.targetUrl.String())
+			http.Redirect(w, req, sh.targetUrl.String(), http.StatusTemporaryRedirect)
 		} else {
 			log.Printf("specified target not found, using default config")
-			fmt.Fprintf(w, "%v\n", DefaultConfig.DefaultTarget)
+			log.Printf("redirecting to \"%v\"\n", DefaultConfig.DefaultTarget)
+			http.Redirect(w, req, DefaultConfig.DefaultTarget, http.StatusTemporaryRedirect)
 		}
 	} else {
 		panic("no target requested!")
