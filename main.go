@@ -42,7 +42,7 @@ func main() {
 	}
 	defer watcher.Close()
 
-	watcher.Add(ShortsPath)
+	watcher.Add(".")
 	go AllShorts.MonitorConfig(watcher)
 
 	log.Printf("listening to new requests on :%v\n", config.Port)

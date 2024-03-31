@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"time"
 
 	"github.com/fsnotify/fsnotify"
 )
@@ -13,6 +14,8 @@ type Shorts struct {
 }
 
 func NewShorts() (*Shorts, error) {
+	var dat Shorts
+	var err error
 	if _, err := os.Stat(ShortsPath); err != nil {
 		log.Println("shorts not existing, creating default")
 		short := NewShort("git", "https://github.com/tim-krehan/go-link-shortener")
@@ -23,17 +26,22 @@ func NewShorts() (*Shorts, error) {
 		}
 		data, err := json.Marshal(json_config)
 		if err != nil {
+			log.Println("ERROR failed create default shorts:", err)
 			return nil, err
 		}
 		os.WriteFile(ShortsPath, data, 0660)
 	}
 	byt, err := os.ReadFile(ShortsPath)
 	if err != nil {
+		log.Println("ERROR failed to read file:", err)
 		return nil, err
 	}
-	var dat Shorts
-	if err := json.Unmarshal(byt, &dat); err != nil {
-		return nil, err
+	err = json.Unmarshal(byt, &dat)
+	if err != nil {
+		log.Println("ERROR failed to load shorts:", err)
+		log.Println("using default shorts")
+		short := NewShort("git", "https://github.com/tim-krehan/go-link-shortener")
+		dat.Shorts = append(dat.Shorts, *short)
 	}
 	return &dat, err
 }
@@ -52,26 +60,34 @@ func (s Shorts) GetShort(slug string) *Short {
 }
 
 func (s *Shorts) MonitorConfig(watcher *fsnotify.Watcher) {
+	var timer *time.Timer
+	var last_event fsnotify.Event
+	var nil_event fsnotify.Event
+	timer = time.NewTimer(1 * time.Second)
 	for {
 		select {
 		case event, ok := <-watcher.Events:
 			if !ok {
 				return
 			}
-			if event.Op == fsnotify.Write {
-				log.Println("Write Event registered to", event.Name)
-				log.Println("reloading config")
-				newShorts, err := NewShorts()
-				if err != nil {
-					log.Println("failed to load config:", err)
-				}
-				s = newShorts
+			if event.Op == fsnotify.Write && event.Name == ("."+string(os.PathSeparator)+ShortsPath) {
+				timer = time.NewTimer(1 * time.Second)
+				last_event = event
+				log.Println("registered event", event.Op, "for", event.Name)
 			}
 		case err, ok := <-watcher.Errors:
 			if !ok {
 				return
 			}
 			log.Println("Error", err)
+		case <-timer.C:
+			if last_event != nil_event {
+				log.Println("timer went off")
+				newShorts, err := NewShorts()
+				if err == nil {
+					s.Shorts = newShorts.Shorts
+				}
+			}
 		}
 	}
 }
