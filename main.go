@@ -14,7 +14,7 @@ var ShortsPath = "go-shorts.json"
 var AllShorts *Shorts
 
 var DefaultConfig = Config{
-	Port:          8080,
+	Port:          8081,
 	DefaultTarget: "https://github.com/tim-krehan/go-link-shortener",
 }
 
@@ -23,7 +23,6 @@ func main() {
 	log.Println("load config")
 	config := NewConfig()
 	log.Println("loaded config")
-	// log.Printf("%+v", config)
 
 	log.Println("load shorts")
 	AllShorts, _ = NewShorts()
