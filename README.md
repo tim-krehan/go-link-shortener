@@ -57,4 +57,4 @@ Execute the generated binary file.
 
 ## License
 
-This project is licensed under the [Apache License](/?tab=Apache-2.0-1-ov-file).
+This project is licensed under the [Apache License](https://github.com/tim-krehan/go-link-shortener/tree/main?tab=Apache-2.0-1-ov-file).
