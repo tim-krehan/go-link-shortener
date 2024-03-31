@@ -24,7 +24,10 @@
 		{
 			"label": "run",
 			"type": "shell",
-			"command": "./build/go-link-shortener",
+			"command": "${workspaceFolder}/build/go-link-shortener",
+			"options": {
+				"cwd": "${workspaceFolder}/build"
+			},
 			"problemMatcher": [],
 			"group": "build",
 			"runOptions": {
@@ -32,7 +35,9 @@
 				"instanceLimit": 1,
 				"runOn": "default"
 			},
-			"icon": {"id": "bookmark"},
+			"icon": {
+				"id": "bookmark"
+			},
 			"promptOnClose": true,
 			"isBackground": true,
 			"dependsOn": "go: build package",
