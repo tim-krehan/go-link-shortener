@@ -18,7 +18,7 @@ func NewShorts() (*Shorts, error) {
 	var err error
 	if _, err := os.Stat(ShortsPath); err != nil {
 		log.Println("shorts not existing, creating default")
-		short := NewShort("git", "https://github.com/tim-krehan/go-link-shortener")
+		short := NewShort("git", "https://github.com/tim-krehan/go-link-shortener", "Link shortener written in go. even includes a list with all shorts :).")
 		var sl []Short
 		sl = append(sl, *short)
 		json_config := Shorts{
@@ -31,16 +31,22 @@ func NewShorts() (*Shorts, error) {
 		}
 		os.WriteFile(ShortsPath, data, 0660)
 	}
+	log.Println("reading shorts config from file")
 	byt, err := os.ReadFile(ShortsPath)
 	if err != nil {
 		log.Println("ERROR failed to read file:", err)
 		return nil, err
 	}
+	log.Println("parsing config")
 	err = json.Unmarshal(byt, &dat)
+	for _, s := range dat.Shorts {
+		s.LoadShort()
+	}
+
 	if err != nil {
 		log.Println("ERROR failed to load shorts:", err)
 		log.Println("using default shorts")
-		short := NewShort("git", "https://github.com/tim-krehan/go-link-shortener")
+		short := NewShort("git", "https://github.com/tim-krehan/go-link-shortener", "Link shortener written in go. even includes a list with all shorts :).")
 		dat.Shorts = append(dat.Shorts, *short)
 	}
 	return &dat, err

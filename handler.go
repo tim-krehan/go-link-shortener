@@ -30,12 +30,13 @@ func redirect(w http.ResponseWriter, req *http.Request) {
 }
 
 func list(w http.ResponseWriter, req *http.Request) {
+	log.Printf("listing all shorts")
 	var htmlcontent string = "<html><head>"
 	htmlcontent += "<style>" + css + "</style>"
 	htmlcontent += "</head><body><table>"
-	htmlcontent += "<thead><tr><th>Slug</th><th>Target</th></tr></thead><tbody>"
+	htmlcontent += "<thead><tr><th>Slug</th><th>Target</th><th>Description</th></tr></thead><tbody>"
 	for _, short := range AllShorts.Shorts {
-		htmlcontent += "<tr><td><a href=\"" + short.targetUrl.String() + "\">" + short.Slug + "</a></td>" + "<td>" + short.Target + "</td></tr>"
+		htmlcontent += "<tr><td><a href=\"" + short.targetUrl.String() + "\">" + short.Slug + "</a></td>" + "<td>" + short.Target + "</td>" + "<td>" + short.Description + "</td></tr>"
 	}
 	htmlcontent += "</tbody></table></body></html>"
 	fmt.Fprint(w, htmlcontent)

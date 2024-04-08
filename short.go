@@ -1,48 +1,30 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
 	"net/url"
 )
 
 type Short struct {
-	Slug      string
-	Target    string
-	targetUrl url.URL
+	Slug        string `json:"slug"`
+	Target      string `json:"target"`
+	targetUrl   url.URL
+	Description string `json:"description"`
 }
 
-func NewShort(slug, target string) *Short {
+func NewShort(slug, target, description string) *Short {
 	u, _ := url.Parse(target)
 	s := Short{
-		Slug:      slug,
-		Target:    target,
-		targetUrl: *u,
+		Slug:        slug,
+		Target:      target,
+		targetUrl:   *u,
+		Description: description,
 	}
-	log.Printf("loaded \"%v\" to \"%v\"", s.Slug, s.Target)
+	log.Printf("loaded \"%v\" => \"%v\" - %v", s.Slug, s.Target, s.Description)
 	return &s
 }
-func (s *Short) LoadShort(slug, target string) {
-	u, _ := url.Parse(target)
-	s.Slug = slug
-	s.Target = target
+func (s *Short) LoadShort() {
+	u, _ := url.Parse(s.Target)
 	s.targetUrl = *u
-	log.Printf("loaded \"%v\" to \"%v\"", s.Slug, s.Target)
-}
-
-func (short *Short) UnmarshalJSON(b []byte) error {
-	var s map[string]string
-	if err := json.Unmarshal(b, &s); err != nil {
-		return err
-	}
-	for key, value := range s {
-		short.LoadShort(key, value)
-	}
-	return nil
-}
-func (short Short) MarshalJSON() ([]byte, error) {
-	slug := map[string]string{
-		short.Slug: short.Target,
-	}
-	return json.Marshal(slug)
+	log.Printf("loaded \"%v\" => \"%v\" - %v", s.Slug, s.Target, s.Description)
 }
