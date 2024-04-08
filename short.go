@@ -26,5 +26,5 @@ func NewShort(slug, target, description string) *Short {
 func (s *Short) LoadShort() {
 	u, _ := url.Parse(s.Target)
 	s.targetUrl = *u
-	log.Printf("loaded \"%v\" => \"%v\" - %v", s.Slug, s.Target, s.Description)
+	log.Printf("loaded \"%v\" => \"%v\" - %v", s.Slug, s.targetUrl.String(), s.Description)
 }

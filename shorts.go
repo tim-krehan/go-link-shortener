@@ -39,8 +39,8 @@ func NewShorts() (*Shorts, error) {
 	}
 	log.Println("parsing config")
 	err = json.Unmarshal(byt, &dat)
-	for _, s := range dat.Shorts {
-		s.LoadShort()
+	for index := range dat.Shorts {
+		dat.Shorts[index].LoadShort()
 	}
 
 	if err != nil {
