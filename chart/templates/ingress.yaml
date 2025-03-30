@@ -4,9 +4,12 @@ metadata:
   name: {{ include "chart.fullname" . }}-ingress
   labels:
   {{- include "chart.labels" . | nindent 4 }}
+  annotations:
+{{ toYaml .Values.ingress.annotations | nindent 4 }}
 spec:
+  ingressClassName: {{ .Values.ingress.ingressClassName | quote }}
   rules:
-  - host: go-link-shortener.local
+  - host: {{ .Values.ingress.host | quote }}
     http:
       paths:
       - backend:

@@ -5,4 +5,5 @@ metadata:
   labels:
   {{- include "chart.labels" . | nindent 4 }}
 data:
-  go-shorts.json: {{ .Values.config.goShortsJson | quote }}
+  go-shorts.json: |
+    {"shorts":{{ toJson .Values.config }}}

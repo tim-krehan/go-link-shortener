@@ -18,10 +18,7 @@ spec:
       {{- include "chart.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-      - env:
-        - name: KUBERNETES_CLUSTER_DOMAIN
-          value: {{ quote .Values.kubernetesClusterDomain }}
-        image: {{ .Values.goLinkShortener.goLinkShortener.image.repository }}:{{ .Values.goLinkShortener.goLinkShortener.image.tag
+      - image: {{ .Values.goLinkShortener.goLinkShortener.image.repository }}:{{ .Values.goLinkShortener.goLinkShortener.image.tag
           | default .Chart.AppVersion }}
         name: go-link-shortener
         ports:
