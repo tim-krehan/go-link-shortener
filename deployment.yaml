@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-link-shortener
+  labels:
+    app: go-link-shortener
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-link-shortener
+  template:
+    metadata:
+      labels:
+        app: go-link-shortener
+    spec:
+      containers:
+      - name: go-link-shortener
+        image: ghcr.io/tim-krehan/go-link-shortener:v1.1.2
+        ports:
+        - containerPort: 8081
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/go-shorts.json
+          subPath: go-shorts.json
+      volumes:
+      - name: config-volume
+        configMap:
+          name: go-link-shortener-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: go-link-shortener-config
+data:
+  go-shorts.json: "{}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-link-shortener-service
+spec:
+  selector:
+    app: go-link-shortener
+  ports:
+  - protocol: TCP
+    port: 8081
+    targetPort: 8081
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: go-link-shortener-ingress
+spec:
+  rules:
+  - host: go-link-shortener.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: go-link-shortener-service
+            port:
+              number: 8081
