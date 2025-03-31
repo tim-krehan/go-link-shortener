@@ -5,6 +5,8 @@ metadata:
   labels:
     app: go-link-shortener
   {{- include "chart.labels" . | nindent 4 }}
+  annotations:
+    checksum/config: {{ toJson .Values.config | sha256sum }}
 spec:
   replicas: {{ .Values.goLinkShortener.replicas }}
   selector:

@@ -4,20 +4,20 @@ config:
     description: Link shortener written in golang. As if there aren't enough allready.
 ingress:
   ingressClassName: nginx
-  host: s.example.com
+  host: go.example.com
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    external-dns.alpha.kubernetes.io/hostname: s.example.com
-    cert-manager.io/cluster-issuer: intermediate-ca-issuer
-    cert-manager.io/duration: 2160h
-    cert-manager.io/renew-before: 360h
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    external-dns.alpha.kubernetes.io/hostname: go.example.com
+    # cert-manager.io/cluster-issuer: intermediate-ca-issuer
+    # cert-manager.io/duration: 2160h
+    # cert-manager.io/renew-before: 360h
+    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 goLinkShortener:
   goLinkShortener:
     image:
       repository: ghcr.io/tim-krehan/go-link-shortener
-      tag: v1.1.2
+      tag: v1.1.4
   replicas: 1
 service:
   ports:
