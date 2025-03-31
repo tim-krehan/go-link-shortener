@@ -29,7 +29,7 @@ func main() {
 	log.Println("loaded shorts")
 
 	log.Println("registering route \"/to/*\"")
-	http.HandleFunc("/to/*", redirect)
+	http.HandleFunc("/to/", redirect)
 
 	log.Println("registering route \"/list\"")
 	http.HandleFunc("/list", list)
