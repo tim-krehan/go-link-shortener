@@ -23,7 +23,7 @@ jobs:
       run: go build -v -o build/
 
     - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v4.3.1
+      uses: actions/upload-artifact@v4.6.2
       with:
         name: go-link-shortener
         path: build/go-link-shortener
