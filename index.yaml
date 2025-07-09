@@ -1,40 +1,9 @@
 apiVersion: v1
 entries:
-  chart:
-  - apiVersion: v2
-    appVersion: 1.1.5
-    created: "2025-07-09T06:12:26.065499637Z"
-    description: A Helm chart for Kubernetes
-    digest: 34ccf6027c4365cb6635cbb2415ea175cdda0e0ca9584f72b3748e15445e22cc
-    name: chart
-    type: application
-    urls:
-    - go-link-shortener-1.1.5.tgz
-    version: 1.1.5
-  - apiVersion: v2
-    appVersion: 1.1.4
-    created: "2025-07-09T06:12:26.065134264Z"
-    description: A Helm chart for Kubernetes
-    digest: 3ab235e6f8cc7c6479d2998abd45b9e704edd999322af3adf2c8b75bf13fbb66
-    name: chart
-    type: application
-    urls:
-    - go-link-shortener-1.1.4.tgz
-    version: 1.1.4
-  - apiVersion: v2
-    appVersion: 1.1.3
-    created: "2025-07-09T06:12:26.064721249Z"
-    description: A Helm chart for Kubernetes
-    digest: 385ec05502dd9e6893d74b96cd8f16ccef5c1dc9005cf2347554718b33fbe8d9
-    name: chart
-    type: application
-    urls:
-    - go-link-shortener-1.1.3.tgz
-    version: 1.1.3
   go-link-shortener:
   - apiVersion: v2
     appVersion: 1.1.6
-    created: "2025-07-09T06:12:26.065928449Z"
+    created: "2025-07-09T06:18:17.93699102Z"
     description: A Helm chart for Kubernetes, to deploy a Go link shortener service.
     digest: 5e0900606e9e0eb08d5f58967baa2626b54c2aa2f0be5c54d42ac377df1479f8
     name: go-link-shortener
@@ -42,4 +11,34 @@ entries:
     urls:
     - go-link-shortener-1.1.6.tgz
     version: 1.1.6
-generated: "2025-07-09T06:12:26.063691721Z"
+  - apiVersion: v2
+    appVersion: 1.1.5
+    created: "2025-07-09T06:18:17.936636111Z"
+    description: A simple go link shortener deployment.
+    digest: 89f784042bb51fc3b7e250ccf76a8a867a349c64fe394d206385b8ffb2e902d3
+    name: go-link-shortener
+    type: application
+    urls:
+    - go-link-shortener-1.1.5.tgz
+    version: 1.1.5
+  - apiVersion: v2
+    appVersion: 1.1.4
+    created: "2025-07-09T06:18:17.936245983Z"
+    description: A simple go link shortener deployment.
+    digest: bc7f0233928fde3e3d8d88a2bd1f8a25f1cc8491d6e69a501fd5b9cad434178b
+    name: go-link-shortener
+    type: application
+    urls:
+    - go-link-shortener-1.1.4.tgz
+    version: 1.1.4
+  - apiVersion: v2
+    appVersion: 1.1.3
+    created: "2025-07-09T06:18:17.935887727Z"
+    description: A simple go link shortener deployment.
+    digest: 9a41a9bbcb49f9c76c3e46667963aeb911ee8aff407e3d00f16a188655f28b44
+    name: go-link-shortener
+    type: application
+    urls:
+    - go-link-shortener-1.1.3.tgz
+    version: 1.1.3
+generated: "2025-07-09T06:18:17.935307359Z"
