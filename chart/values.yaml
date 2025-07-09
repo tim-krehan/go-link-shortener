@@ -17,7 +17,7 @@ goLinkShortener:
   goLinkShortener:
     image:
       repository: ghcr.io/tim-krehan/go-link-shortener
-      tag: v1.1.5
+      tag: v1.1.6
   replicas: 1
 service:
   ports:
