@@ -3,6 +3,7 @@ config:
     target: https://github.com/tim-krehan/go-link-shortener
     description: Link shortener written in golang. As if there aren't enough allready.
 ingress:
+  enabled: false
   ingressClassName: nginx
   host: go.example.com
   annotations:
@@ -13,15 +14,25 @@ ingress:
     # cert-manager.io/renew-before: 360h
     # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+route:
+  enabled: true
+  apiVersion: gateway.networking.k8s.io/v1
+  kind: HTTPRoute
+  annotations: {}
+  labels: {}
+  hostnames:
+    - s.example.com
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: external-gateway
+      namespace: traefik
+      sectionName: websecure
+  https: false
+  filters: []
 goLinkShortener:
   goLinkShortener:
     image:
       repository: ghcr.io/tim-krehan/go-link-shortener
       tag: v1.1.6
   replicas: 1
-service:
-  ports:
-  - port: 8081
-    protocol: TCP
-    targetPort: 8081
-  type: ClusterIP
